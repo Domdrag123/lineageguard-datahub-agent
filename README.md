@@ -2,6 +2,9 @@
 
 **Know the blast radius before you merge.**
 
+[Live demo](https://domdrag123.github.io/lineageguard-datahub-agent/) ·
+[Demo video](https://youtu.be/B1ujvaOVY0o)
+
 LineageGuard is a DataHub-grounded change-safety agent. It reads entity,
 schema, ownership, tag, and multi-hop lineage context through DataHub's
 official MCP server; predicts which dashboards, pipelines, and ML models a
@@ -28,7 +31,8 @@ actionable pre-merge safety decision.
 
 ## Run the working demo
 
-No API key or dependency install is required:
+The hosted demo uses the bundled deterministic catalog fixture. No API key or
+dependency install is required:
 
 ```bash
 python -m lineageguard.server --port 8780

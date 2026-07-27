@@ -4,4 +4,7 @@ __pycache__/
 .env
 dist/
 receipts/
-
+.video-deps/
+video/build/
+video/narration.wav
+video/*.mp4

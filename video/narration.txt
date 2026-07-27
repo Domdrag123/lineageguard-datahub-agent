@@ -1,0 +1,11 @@
+Data teams usually discover a breaking schema change after a dashboard, pipeline, or model has already failed. LineageGuard moves that decision before merge.
+
+The agent reads DataHub through the official MCP tools: get entities, list schema fields, and get multi-hop lineage. It combines that context with ownership, critical tags, production state, and model dependencies.
+
+In this example, a developer proposes dropping customer email from the production orders table. LineageGuard follows the column through dbt and Airflow, finds an executive revenue dashboard, an unowned feature job, and a production churn model.
+
+The result is a fail-closed block, a transparent risk score, and a deterministic decision receipt. Nothing is silently changed.
+
+Instead, the agent creates owner-scoped recovery tickets and previews reversible DataHub updates. When a dual-write, backfill, contract-test, and rollback plan is supplied, the decision becomes reviewable.
+
+LineageGuard turns DataHub's context graph into accountable change safety: grounded, explainable, and ready for real data and AI teams.
