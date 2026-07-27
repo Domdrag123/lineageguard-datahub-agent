@@ -1,0 +1,8 @@
+{
+  "asset_urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,commerce.orders,PROD)",
+  "field": "customer_email",
+  "operation": "drop_field",
+  "new_value": null,
+  "migration_plan": null
+}
+

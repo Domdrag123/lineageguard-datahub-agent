@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LineageGuard — Change safety grounded in DataHub</title>
+  <meta name="description" content="A DataHub-grounded agent that catches breaking schema changes before production.">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#">
+      <span class="brand-mark">LG</span>
+      <span>LineageGuard</span>
+    </a>
+    <div class="top-actions">
+      <span class="mode"><span class="pulse"></span> DataHub context connected</span>
+      <a class="ghost" href="https://github.com/datahub-project/datahub" target="_blank" rel="noreferrer">Open source ↗</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <p class="eyebrow">DATAHUB-GROUNDED CHANGE SAFETY</p>
+        <h1>Know the blast radius<br><span>before you merge.</span></h1>
+        <p class="lede">LineageGuard turns DataHub lineage, ownership, tags, schemas and ML context into an accountable go/no-go decision for every data change.</p>
+      </div>
+      <div class="hero-stat">
+        <span class="stat-label">ACTIVE PROTECTION</span>
+        <strong>4 hops</strong>
+        <span>column-aware lineage</span>
+      </div>
+    </section>
+
+    <section class="workspace">
+      <aside class="control-panel">
+        <div class="panel-heading">
+          <span>Proposed change</span>
+          <span class="step">01</span>
+        </div>
+        <label>Data asset</label>
+        <select id="asset">
+          <option value="urn:li:dataset:(urn:li:dataPlatform:snowflake,commerce.orders,PROD)">commerce.orders</option>
+        </select>
+        <label>Field</label>
+        <select id="field">
+          <option value="customer_email">customer_email</option>
+          <option value="gross_amount">gross_amount</option>
+        </select>
+        <label>Operation</label>
+        <div class="operation-grid">
+          <button class="operation active" data-operation="drop_field">Drop field</button>
+          <button class="operation" data-operation="rename_field">Rename</button>
+          <button class="operation" data-operation="narrow_type">Narrow type</button>
+          <button class="operation" data-operation="make_required">Require</button>
+        </div>
+        <label for="plan">Migration plan <span>optional</span></label>
+        <textarea id="plan" placeholder="Describe dual-write, backfill and rollback…"></textarea>
+        <button id="analyze" class="primary">Analyze with DataHub <span>→</span></button>
+        <p class="privacy">Read-only by default. Metadata mutations stay in preview until an operator approves them.</p>
+      </aside>
+
+      <section class="result-panel">
+        <div class="decision-row">
+          <div>
+            <p class="eyebrow">AGENT DECISION</p>
+            <div class="decision"><span id="decision">BLOCK</span><span id="decision-copy">Unsafe to merge</span></div>
+          </div>
+          <div class="score-wrap">
+            <svg class="gauge" viewBox="0 0 120 120" aria-label="Risk score">
+              <circle cx="60" cy="60" r="50" class="gauge-bg"></circle>
+              <circle id="gauge" cx="60" cy="60" r="50" class="gauge-value"></circle>
+            </svg>
+            <div class="score"><strong id="risk">100</strong><span>/100 risk</span></div>
+          </div>
+        </div>
+
+        <div class="graph-card">
+          <div class="card-head">
+            <div><span class="step">02</span><strong>Column-level blast radius</strong></div>
+            <span id="impact-count" class="chip">4 impacted assets</span>
+          </div>
+          <div class="graph" id="graph"></div>
+          <div class="legend"><span><i class="source-dot"></i> changed source</span><span><i class="impact-dot"></i> impacted</span><span><i class="critical-dot"></i> critical dependency</span></div>
+        </div>
+
+        <div class="lower-grid">
+          <article class="findings-card">
+            <div class="card-head"><div><span class="step">03</span><strong>Why it stopped</strong></div></div>
+            <div id="findings"></div>
+          </article>
+          <article class="tickets-card">
+            <div class="card-head"><div><span class="step">04</span><strong>Recovery plan</strong></div><span class="chip safe">reversible</span></div>
+            <div id="tickets"></div>
+          </article>
+        </div>
+
+        <footer class="receipt">
+          <span>DECISION RECEIPT</span>
+          <code id="receipt">—</code>
+          <button id="copy">Copy</button>
+        </footer>
+      </section>
+    </section>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>
+

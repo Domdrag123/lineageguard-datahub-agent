@@ -1,0 +1,67 @@
+{
+  "assets": [
+    {
+      "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,commerce.orders,PROD)",
+      "name": "commerce.orders",
+      "kind": "dataset",
+      "owner": "commerce-platform",
+      "tags": ["Critical", "Revenue", "PII"],
+      "fields": ["order_id", "customer_email", "gross_amount", "created_at"]
+    },
+    {
+      "urn": "urn:li:dataset:(urn:li:dataPlatform:dbt,analytics.order_facts,PROD)",
+      "name": "analytics.order_facts",
+      "kind": "dataset",
+      "owner": "analytics-core",
+      "tags": ["Critical", "Revenue"],
+      "fields": ["order_id", "customer_key", "gross_amount", "order_date"]
+    },
+    {
+      "urn": "urn:li:dashboard:(looker,revenue-command-center)",
+      "name": "Revenue Command Center",
+      "kind": "dashboard",
+      "owner": "finance-analytics",
+      "tags": ["Revenue", "Executive"],
+      "fields": ["gross_amount", "net_revenue"]
+    },
+    {
+      "urn": "urn:li:mlModel:(urn:li:dataPlatform:mlflow,churn-risk-v4,PROD)",
+      "name": "churn-risk-v4",
+      "kind": "ml_model",
+      "owner": "ml-retention",
+      "tags": ["Critical", "CustomerFacing"],
+      "fields": ["customer_key", "lifetime_value", "order_velocity"]
+    },
+    {
+      "urn": "urn:li:dataJob:(urn:li:dataFlow:(airflow,retention_features,PROD),customer_ltv)",
+      "name": "customer_ltv feature job",
+      "kind": "pipeline",
+      "owner": null,
+      "tags": ["Critical"],
+      "fields": ["customer_key", "lifetime_value"]
+    }
+  ],
+  "edges": [
+    {
+      "upstream": "urn:li:dataset:(urn:li:dataPlatform:snowflake,commerce.orders,PROD)",
+      "downstream": "urn:li:dataset:(urn:li:dataPlatform:dbt,analytics.order_facts,PROD)",
+      "field_map": {"customer_email": ["customer_key"], "gross_amount": ["gross_amount"]}
+    },
+    {
+      "upstream": "urn:li:dataset:(urn:li:dataPlatform:dbt,analytics.order_facts,PROD)",
+      "downstream": "urn:li:dashboard:(looker,revenue-command-center)",
+      "field_map": {"gross_amount": ["gross_amount"]}
+    },
+    {
+      "upstream": "urn:li:dataset:(urn:li:dataPlatform:dbt,analytics.order_facts,PROD)",
+      "downstream": "urn:li:dataJob:(urn:li:dataFlow:(airflow,retention_features,PROD),customer_ltv)",
+      "field_map": {"customer_key": ["customer_key"]}
+    },
+    {
+      "upstream": "urn:li:dataJob:(urn:li:dataFlow:(airflow,retention_features,PROD),customer_ltv)",
+      "downstream": "urn:li:mlModel:(urn:li:dataPlatform:mlflow,churn-risk-v4,PROD)",
+      "field_map": {"customer_key": ["customer_key"]}
+    }
+  ]
+}
+
